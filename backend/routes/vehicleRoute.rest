@@ -1,0 +1,37 @@
+GET http://localhost:3000/vehicles
+
+
+###
+
+
+GET http://localhost:3000/vehicles/62c31d7a25a6ae14f08c47b1
+
+
+###
+
+
+POST http://localhost:3000/vehicles
+Content-Type: application/json
+
+{
+    "make" : "Audi",
+    "model" : "A6",
+    "year" : 1995
+}
+
+###
+
+
+DELETE http://localhost:3000/vehicles/62c3253e1cde654185254b10
+
+
+###
+
+
+PATCH  http://localhost:3000/vehicles/62c32a205254e471c1dd47a0
+Content-Type: application/json
+
+{
+    "make" : "Ford",
+    "model" : "Modeo"
+}
