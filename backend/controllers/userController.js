@@ -1,5 +1,7 @@
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 const registerUser = async (req, res) => {
     try {
@@ -27,10 +29,17 @@ const loginUser = async (req, res) => {
         if(!await bcrypt.compare(req.body.password, user.password)) throw Error("Incorrect password!")
         //successful login
 
-        res.json({message: "Login successful!"})
+        const accessToken = generateAccessToken(user._id)
+
+        res.json({accessToken})
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
+}
+
+const generateAccessToken = (id) => {
+    id = id.toString()
+    return jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1000s'})
 }
 
 module.exports = {
