@@ -2,11 +2,10 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "username" : "test2",
-    "password" : "test2",
-    "email" : "test2@test.com"
+    "username" : "test3",
+    "password" : "test3",
+    "email" : "test3@test.com"
 }
-
 
 ###
 
@@ -14,6 +13,24 @@ POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-    "username" : "test2",
-    "password" : "test2"
+    "username" : "test",
+    "password" : "test"
+}
+
+###
+
+POST http://localhost:3000/users/refreshToken
+Content-Type: application/json
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQ4M2I2NjAxMjM5MmIwNmNkMDQ0YSIsImlhdCI6MTY1NzExNTk0NSwiZXhwIjoxNjU3MjAyMzQ1fQ.SisC97qOFG2CapErpgDa2CUvr4I2C-A1iYQBUxkJ4N8"
+}
+
+###
+
+DELETE  http://localhost:3000/users/logout
+Content-Type: application/json
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQ0Zjg0YjA5OWE3Mzc3ZmRlOGFiZSIsImlhdCI6MTY1NzExNjc2MCwiZXhwIjoxNjU3MjAzMTYwfQ.VpkcgW_KKjPKQvgGo7zQUza8XMJv6iiKwr79v4x7TIA"
 }

@@ -1,14 +1,11 @@
 GET http://localhost:3000/vehicles
 
-
 ###
-
 
 GET http://localhost:3000/vehicles/62c31d7a25a6ae14f08c47b1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQ4M2I2NjAxMjM5MmIwNmNkMDQ0YSIsImlhdCI6MTY1NzA4NDI5MywiZXhwIjoxNjU3MDg1MjkzfQ.rZwNnenmgLPYr5Dx75Vv6NcsBDv2ri47rSwdUuHbnI4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQ4M2I2NjAxMjM5MmIwNmNkMDQ0YSIsImlhdCI6MTY1NzExNTQyNCwiZXhwIjoxNjU3MTE2NDI0fQ.mKr4PS-rIGu6ivovsN6TBBMIvAFrMfWPgoxEVBuNrVI
 
 ###
-
 
 POST http://localhost:3000/vehicles
 Content-Type: application/json
@@ -21,12 +18,9 @@ Content-Type: application/json
 
 ###
 
-
 DELETE http://localhost:3000/vehicles/62c3253e1cde654185254b10
 
-
 ###
-
 
 PATCH  http://localhost:3000/vehicles/62c32a205254e471c1dd47a0
 Content-Type: application/json
