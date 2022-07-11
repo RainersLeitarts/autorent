@@ -1,0 +1,17 @@
+.layoutOuterContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.layoutInnerContainer{
+    max-width: 1400px;
+    width: 100%;
+}
+
+@media screen and (max-width: 1400px) {
+    .layoutOuterContainer{
+        padding: 0 20px;
+    }
+}
