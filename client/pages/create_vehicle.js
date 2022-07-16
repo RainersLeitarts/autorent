@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import Layout from '../components/Layout'
 import styles from '../styles/CreateVehicle.module.css'
-import axios from 'axios'
+import { create } from '../actions/vehicles'
+
 
 const Section = ({ children, title }) => {
     return (
@@ -16,6 +17,7 @@ const create_vehicle = () => {
     const [values, setValues] = useState({
         make: 'Audi',
         model: 'A6',
+        year: 2005,
         engineVolume: '2.0',
         fuelType: 'Diesel',
         gearbox: 'Automatic',
@@ -53,22 +55,27 @@ const create_vehicle = () => {
     }
 
     const handleSubmit = async () => {
-        const formData = new FormData()
+        // const formData = new FormData()
 
-        for (let value in values) {
-            formData.append(value, values[value])
-        }
+        // for (let value in values) {
+        //     formData.append(value, values[value])
+        // }
 
-        if (images.length === 0) {
-            console.log('No images')
-            return
-        }
+        // if (images.length === 0) {
+        //     console.log('No images')
+        //     return
+        // }
 
-        formData.append('images', images)
+        // formData.append('images', images)
 
-        const res = await axios.post('url', formData, {
-            headers: {Accept: 'application/json'}
-        })
+        const response = await create(values)
+        console.log(response)
+
+
+
+
+
+
 
         //debug
         // for(let key of formData){
