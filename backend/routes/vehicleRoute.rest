@@ -1,4 +1,4 @@
-GET http://localhost:3000/vehicles
+GET http://localhost:3000/api/vehicles/getAll
 
 ###
 
@@ -7,12 +7,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQ4M2I2N
 
 ###
 
-POST http://localhost:3000/vehicles
+POST http://localhost:3000/api/vehicles/add
 Content-Type: application/json
 
 {
-    "make" : "Audi",
-    "model" : "A6",
+    "make" : "FOOOOOOOOOOOORD",
+    "model" : "MODEO",
     "year" : 1995
 }
 

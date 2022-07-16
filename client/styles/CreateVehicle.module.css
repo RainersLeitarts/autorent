@@ -47,14 +47,14 @@ input#add{
 
 .addImgBtn{
     height: 100px;
-    width: 100px;
+    width: 130px;
     font-size: 40px;
     cursor: pointer;
 }
 
 .image{
     position: relative;
-    width: 100px;
+    width: 130px;
     height: 100px;
     background-position: center;
     background-repeat: no-repeat;
@@ -111,6 +111,23 @@ input#add{
     margin-bottom: 20px;
 }
 
+.types{
+    padding: 0;
+    cursor: pointer;
+}
+
+.saveBtn{
+    padding: 0 10px;
+    cursor: pointer;
+    float: right;
+}
+
+.statusInput{
+    padding: 0;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
 @media screen and (max-width: 764px) {
     .inputsContainer{
         grid-template-columns: 1fr 1fr;
@@ -120,6 +137,27 @@ input#add{
 @media screen and (max-width: 550px) {
     .inputsContainer{
         grid-template-columns: 1fr;
+    }
+
+    .imagesContainer{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .controls{
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        gap: 10px;
+    }
+
+    .status{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .statusInput{
+        margin: 0;
     }
 }
 
