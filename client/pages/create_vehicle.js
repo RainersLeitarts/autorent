@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Layout from '../components/Layout'
 import styles from '../styles/CreateVehicle.module.css'
-import { create } from '../actions/vehicles'
+import { create, uploadImages } from '../actions/vehicles'
 
 
 const Section = ({ children, title }) => {
@@ -14,6 +14,8 @@ const Section = ({ children, title }) => {
 }
 
 const create_vehicle = () => {
+    const UPLOAD_PRESET = "vehicle-images"
+    const [imageUrls, setImgUrls] = useState(['test'])
     const [values, setValues] = useState({
         make: 'Audi',
         model: 'A6',
@@ -23,7 +25,8 @@ const create_vehicle = () => {
         gearbox: 'Automatic',
         doors: '4',
         seats: '5',
-        cruise: 'True'
+        cruise: 'True',
+        images: []
     })
     const { make, model, engineVolume, fuelType, gearbox, doors, seats, cruise } = values
     const [images, setImages] = useState([])
@@ -45,6 +48,8 @@ const create_vehicle = () => {
     const handleChange = e => {
         const files = e.target.files
 
+        console.log(files)
+
         setImages(prev => {
             return [...prev, ...files]
         })
@@ -55,39 +60,24 @@ const create_vehicle = () => {
     }
 
     const handleSubmit = async () => {
-        // const formData = new FormData()
+        const formData = new FormData()
+        formData.append('upload_preset', 'vehicle-images')
 
-        // for (let value in values) {
-        //     formData.append(value, values[value])
-        // }
-
-        // if (images.length === 0) {
-        //     console.log('No images')
-        //     return
-        // }
-
-        // formData.append('images', images)
-
-        const response = await create(values)
-        console.log(response)
-
-
-
-
-
-
-
-        //debug
-        // for(let key of formData){
-        //     console.log(key)
-        // }
-
-        
+        //Try n not use state
+        await Promise.all(images.map(image => {
+            formData.append('file', image)
+            uploadImages(formData).then(response => {
+                console.log(response)
+                setImgUrls(curr =>{
+                    return [...curr, response.toString()]
+                })
+            })
+        }))
     }
 
     useEffect(() => {
-
-    }, [values])
+        console.log(imageUrls)
+    }, [imageUrls])
 
     return (
         <Layout>
