@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import Layout from '../components/Layout'
 import styles from '../styles/CreateVehicle.module.css'
-import { create, uploadImages } from '../actions/vehicles'
+import { postVehicle } from '../redux/actions/ProductActions'
+import { useDispatch } from 'react-redux'
+
 
 
 const Section = ({ children, title }) => {
@@ -14,8 +16,8 @@ const Section = ({ children, title }) => {
 }
 
 const create_vehicle = () => {
-    const UPLOAD_PRESET = "vehicle-images"
-    const [imageUrls, setImgUrls] = useState(['test'])
+    
+    const dispatch = useDispatch()
     const [values, setValues] = useState({
         make: 'Audi',
         model: 'A6',
@@ -60,24 +62,23 @@ const create_vehicle = () => {
     }
 
     const handleSubmit = async () => {
-        const formData = new FormData()
-        formData.append('upload_preset', 'vehicle-images')
+        // const formData = new FormData()
+        // formData.append('upload_preset', 'vehicle-images')
 
-        //Try n not use state
-        await Promise.all(images.map(image => {
-            formData.append('file', image)
-            uploadImages(formData).then(response => {
-                console.log(response)
-                setImgUrls(curr =>{
-                    return [...curr, response.toString()]
-                })
-            })
-        }))
+        // //Try n not use state
+        // await Promise.all(images.map(image => {
+        //     formData.append('file', image)
+        //     uploadImages(formData).then(response => {
+        //         console.log(response)
+        //         setImgUrls(curr =>{
+        //             return [...curr, response.toString()]
+        //         })
+        //     })
+        // }))
+
+        dispatch(postVehicle(images))
     }
 
-    useEffect(() => {
-        console.log(imageUrls)
-    }, [imageUrls])
 
     return (
         <Layout>
