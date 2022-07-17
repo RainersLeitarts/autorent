@@ -22,12 +22,12 @@ const create_vehicle = () => {
         make: 'Audi',
         model: 'A6',
         year: 2005,
-        engineVolume: '2.0',
+        engineVolume: 2.0,
         fuelType: 'Diesel',
         gearbox: 'Automatic',
-        doors: '4',
-        seats: '5',
-        cruise: 'True',
+        doors: 4,
+        seats: 5,
+        cruise: true,
         images: []
     })
     const { make, model, engineVolume, fuelType, gearbox, doors, seats, cruise } = values
@@ -76,7 +76,7 @@ const create_vehicle = () => {
         //     })
         // }))
 
-        dispatch(postVehicle(images))
+        dispatch(postVehicle(values, images))
     }
 
 
