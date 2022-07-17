@@ -4,8 +4,6 @@ import styles from '../styles/CreateVehicle.module.css'
 import { postVehicle } from '../redux/actions/ProductActions'
 import { useDispatch } from 'react-redux'
 
-
-
 const Section = ({ children, title }) => {
     return (
         <div className={styles.sectionContainer}>
@@ -16,21 +14,32 @@ const Section = ({ children, title }) => {
 }
 
 const create_vehicle = () => {
-    
     const dispatch = useDispatch()
+    const [type, setType] = useState('automašīna')
+
+    //generate inputs from values ex
+    //model: {
+    //    value: a6,
+    //    placeholder: 'Modelis'
+    //}
+
     const [values, setValues] = useState({
-        make: 'Audi',
-        model: 'A6',
-        year: 2005,
-        engineVolume: 2.0,
-        fuelType: 'Diesel',
-        gearbox: 'Automatic',
-        doors: 4,
-        seats: 5,
-        cruise: true,
+        status: 'Pieejams',
+        visible: true,
+        make: '',
+        model: '',
+        year: null,
+        engineVolume: null,
+        fuelType: '',
+        gearbox: '',
+        doors: null,
+        seats: null,
+        cruise: null,
+        ac: null,
+        price: null,
         images: []
     })
-    const { make, model, engineVolume, fuelType, gearbox, doors, seats, cruise } = values
+    const { status, visible, make, model, year, engineVolume, fuelType, gearbox, doors, seats, cruise, ac, price } = values
     const [images, setImages] = useState([])
     const fileInput = useRef(null)
 
@@ -50,8 +59,6 @@ const create_vehicle = () => {
     const handleChange = e => {
         const files = e.target.files
 
-        console.log(files)
-
         setImages(prev => {
             return [...prev, ...files]
         })
@@ -62,29 +69,23 @@ const create_vehicle = () => {
     }
 
     const handleSubmit = async () => {
-        // const formData = new FormData()
-        // formData.append('upload_preset', 'vehicle-images')
-
-        // //Try n not use state
-        // await Promise.all(images.map(image => {
-        //     formData.append('file', image)
-        //     uploadImages(formData).then(response => {
-        //         console.log(response)
-        //         setImgUrls(curr =>{
-        //             return [...curr, response.toString()]
-        //         })
-        //     })
-        // }))
-
         dispatch(postVehicle(values, images))
     }
 
+    const handleChangeType = (e) => {
+        setType(e.target.value)
+    }
+
+
+    useEffect(() => {
+        console.table(values)
+    }, [values])
 
     return (
         <Layout>
             <h1 className={styles.createTitle}>Pievienot Jaunu Piedāvājumu</h1>
             <div className={styles.controls}>
-                <select className={`${styles.input} ${styles.types}`}>
+                <select value={type} onChange={handleChangeType} className={`${styles.input} ${styles.types}`}>
                     <option value={'automašīna'} >Automašīna</option>
                     <option value={'piekabe'} >Piekabe</option>
                 </select>
@@ -93,11 +94,11 @@ const create_vehicle = () => {
             </div>
             <Section title='Statuss'>
                 <div className={styles.status}>
-                    <select className={`${styles.input} ${styles.statusInput}`}>
-                        <option value={'enabled'} >Redzams</option>
-                        <option value={'disabled'} >Paslēpts</option>
+                    <select value={visible} onChange={handleFormInput('visible')} className={`${styles.input} ${styles.statusInput}`}>
+                        <option value={true} >Redzams</option>
+                        <option value={false} >Paslēpts</option>
                     </select>
-                    <select className={`${styles.input} ${styles.statusInput}`}>
+                    <select value={status} onChange={handleFormInput('status')} className={`${styles.input} ${styles.statusInput}`}>
                         <option value={'available'} >Pieejams</option>
                         <option value={'unavailable'} >Nav pieejams</option>
                     </select>
@@ -106,13 +107,33 @@ const create_vehicle = () => {
             <Section title='Galvenie Parametri'>
                 <div className={styles.inputsContainer}>
                     <input value={make} onChange={handleFormInput('make')} placeholder='Marka' className={`${styles.input} ${styles.small}`} type='text' />
-                    <input value={engineVolume} onChange={handleFormInput('engineVolume')} placeholder='Motora Tilpums' className={`${styles.input} ${styles.small}`} type='number' list='makes' />
-                    <input value={gearbox} onChange={handleFormInput('gearbox')} placeholder='Kārbas tips' className={`${styles.input} ${styles.small}`} type='text' list='makes' />
-                    <input value={seats} onChange={handleFormInput('seats')} placeholder='Sēdvietas' className={`${styles.input} ${styles.small}`} type='number' list='makes' />
-                    <input value={model} onChange={handleFormInput('model')} placeholder='Modelis' className={`${styles.input} ${styles.small}`} type='text' list='makes' />
-                    <input value={fuelType} onChange={handleFormInput('fuelType')} placeholder='Degvielas tips' className={`${styles.input} ${styles.small}`} type='text' list='makes' />
-                    <input value={doors} onChange={handleFormInput('doors')} placeholder='Durvis' className={`${styles.input} ${styles.small}`} type='number' list='makes' />
-                    <input value={cruise} onChange={handleFormInput('cruise')} placeholder='Kruīza kontrole' className={`${styles.input} ${styles.small}`} type='text' list='makes' />
+                    <input value={year} onChange={handleFormInput('year')} placeholder='Gads' className={`${styles.input} ${styles.small}`} type='text' />
+                    <input value={engineVolume} onChange={handleFormInput('engineVolume')} placeholder='Motora Tilpums' className={`${styles.input} ${styles.small}`} type='number' />
+                    <select value={gearbox} onChange={handleFormInput('gearbox')} placeholder='Kārbas tips' className={`${styles.input} ${styles.small}`} type='text'>
+                        <option >Kārbas tips</option>
+                        <option value={'Dīzelis'} >Manuāla</option>
+                        <option value={'Benzīns'} >Automātiska</option>
+                    </select>
+                    <input value={seats} onChange={handleFormInput('seats')} placeholder='Sēdvietas' className={`${styles.input} ${styles.small}`} type='number' />
+                    <input value={model} onChange={handleFormInput('model')} placeholder='Modelis' className={`${styles.input} ${styles.small}`} type='text' />
+                    <select value={fuelType} onChange={handleFormInput('fuelType')} placeholder='Degvielas tips' className={`${styles.input} ${styles.small}`} type='text'>
+                        <option >Degvielas tips</option>
+                        <option value={'Dīzelis'} >Dīzelis</option>
+                        <option value={'Benzīns'} >Benzīns</option>
+                        <option value={'Elektrība'} >Elektrība</option>
+                        <option value={'Hibrīds'} >Hibrīds</option>
+                    </select>
+                    <input value={doors} onChange={handleFormInput('doors')} placeholder='Durvis' className={`${styles.input} ${styles.small}`} type='number' />
+                    <select value={cruise} onChange={handleFormInput('cruise')} placeholder='Kruīza kontrole' className={`${styles.input} ${styles.small}`} type='text'>
+                        <option >Kruīza kontrole</option>
+                        <option value={true} >Ir</option>
+                        <option value={false} >Nav</option>
+                    </select>
+                    <select value={ac} onChange={handleFormInput('ac')} placeholder='Kondicionieris' className={`${styles.input} ${styles.small}`} type='text'>
+                        <option value={true} >Kondicionieris</option>
+                        <option value={true} >Ir</option>
+                        <option value={false} >Nav</option>
+                    </select>
                     <datalist className={`${styles.input} ${styles.small}`} id='makes'>
                         {makes.map((make, key) => {
                             return <option key={key} value={make} />
@@ -121,7 +142,7 @@ const create_vehicle = () => {
                 </div>
             </Section>
             <Section title='Izcenojums'>
-                <input placeholder='Cena' className={`${styles.input} ${styles.small}`} type='' list='makes' />
+                <input value={price} onChange={handleFormInput('price')} placeholder='Cena' className={`${styles.input} ${styles.small}`} type='' />
             </Section>
             <Section title='Attēli'>
                 <div className={styles.imagesContainer}>

@@ -1,6 +1,14 @@
 import { Schema, model, models } from 'mongoose'
 
 const vehicleSchema = new Schema({
+    status: {
+        type: String,
+        required: true
+    },
+    visible: {
+        type: Boolean,
+        required: true
+    },
     make: {
         type: String,
         required: true
@@ -35,6 +43,14 @@ const vehicleSchema = new Schema({
     },
     cruise: {
         type: Boolean,
+        required: true
+    },
+    ac: {
+        type: Boolean,
+        required: true
+    },
+    price: {
+        type: Number,
         required: true
     },
     images: [String]

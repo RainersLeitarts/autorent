@@ -7,7 +7,7 @@
 .inputsContainer{
     width: 100%;
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
     column-gap: 10px;
     row-gap: 10px;
 }
