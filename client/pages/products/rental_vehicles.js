@@ -1,14 +1,18 @@
 import axios from 'axios'
-import React from 'react'
-import Layout from '../components/Layout'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import Layout from '../../components/Layout'
+import styles from '../../styles/ProductsPage.module.css'
+import { storeRentalVehicles } from '../../redux/actions/ProductActions'
 
-const getVehicles = async (key, name) => {
-    const { data, status } = await axios.get('http://localhost:3000/api/vehicles/getAll')
+//make 
+
+const getVehicles = async () => {
+    const { data } = await axios.get('http://localhost:3000/api/vehicles/getAll')
     return data
 }
 
 export async function getServerSideProps(context) {
-    console.log('Params: ' + context.params)
     const data = await getVehicles(null, context.params)
     return {
         props: { data }
@@ -16,7 +20,12 @@ export async function getServerSideProps(context) {
 }
 
 const rental_vehicles = ({ data }) => {
-    console.log(data)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(storeRentalVehicles(data))
+    })
+
     return (
         <Layout>
             <div>{data.vehicles.map(vehicle => {

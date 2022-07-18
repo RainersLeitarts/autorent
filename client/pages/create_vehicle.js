@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Layout from '../components/Layout'
 import styles from '../styles/CreateVehicle.module.css'
 import { postVehicle } from '../redux/actions/ProductActions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Section = ({ children, title }) => {
     return (
@@ -17,6 +17,8 @@ const create_vehicle = () => {
     const dispatch = useDispatch()
     const [type, setType] = useState('automašīna')
 
+    const { loading, error, success } = useSelector(state => state.vehicle)
+
     //generate inputs from values ex
     //model: {
     //    value: a6,
@@ -28,15 +30,15 @@ const create_vehicle = () => {
         visible: true,
         make: '',
         model: '',
-        year: null,
-        engineVolume: null,
+        year: undefined,
+        engineVolume: undefined,
         fuelType: '',
         gearbox: '',
-        doors: null,
-        seats: null,
-        cruise: null,
-        ac: null,
-        price: null,
+        doors: undefined,
+        seats: undefined,
+        cruise: undefined,
+        ac: undefined,
+        price: undefined,
         images: []
     })
     const { status, visible, make, model, year, engineVolume, fuelType, gearbox, doors, seats, cruise, ac, price } = values
@@ -70,20 +72,35 @@ const create_vehicle = () => {
 
     const handleSubmit = async () => {
         dispatch(postVehicle(values, images))
+        success && setValues(
+            {
+                status: 'Pieejams',
+                visible: true,
+                make: '',
+                model: '',
+                year: undefined,
+                engineVolume: undefined,
+                fuelType: '',
+                gearbox: '',
+                doors: undefined,
+                seats: undefined,
+                cruise: undefined,
+                ac: undefined,
+                price: undefined,
+                images: []
+            })
     }
 
     const handleChangeType = (e) => {
         setType(e.target.value)
     }
 
-
-    useEffect(() => {
-        console.table(values)
-    }, [values])
-
     return (
         <Layout>
             <h1 className={styles.createTitle}>Pievienot Jaunu Piedāvājumu</h1>
+            {loading && <h3>Augšupielādē datus...</h3>}
+            {error && <h3>Notikusi kļūda...</h3>}
+            {success && <h3>Piedāvājums veiksmīgi izveidots!</h3>}
             <div className={styles.controls}>
                 <select value={type} onChange={handleChangeType} className={`${styles.input} ${styles.types}`}>
                     <option value={'automašīna'} >Automašīna</option>
@@ -111,8 +128,8 @@ const create_vehicle = () => {
                     <input value={engineVolume} onChange={handleFormInput('engineVolume')} placeholder='Motora Tilpums' className={`${styles.input} ${styles.small}`} type='number' />
                     <select value={gearbox} onChange={handleFormInput('gearbox')} placeholder='Kārbas tips' className={`${styles.input} ${styles.small}`} type='text'>
                         <option >Kārbas tips</option>
-                        <option value={'Dīzelis'} >Manuāla</option>
-                        <option value={'Benzīns'} >Automātiska</option>
+                        <option value={'Manuāla'} >Manuāla</option>
+                        <option value={'Automātiska'} >Automātiska</option>
                     </select>
                     <input value={seats} onChange={handleFormInput('seats')} placeholder='Sēdvietas' className={`${styles.input} ${styles.small}`} type='number' />
                     <input value={model} onChange={handleFormInput('model')} placeholder='Modelis' className={`${styles.input} ${styles.small}`} type='text' />
