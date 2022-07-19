@@ -18,6 +18,9 @@ export const vehicleSlice = createSlice({
         },
         STORE_RENTAL_VEHICLES: (state, action) => {
             return {...state, rental_vehicles: action.payload}
+        },
+        default: (state) => {
+            return (state)
         }
     }
 })

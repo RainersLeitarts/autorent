@@ -19,4 +19,4 @@ const userSchema = new Schema({
     }
 }).set('timestamps', true)
 
-module.exports = models.User || mongoose.model('User', userSchema)
+module.exports = models.User || model('User', userSchema)

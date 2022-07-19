@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import Layout from '../../components/Layout'
 import styles from '../../styles/ProductsPage.module.css'
 import { storeRentalVehicles } from '../../redux/actions/ProductActions'
+import ProductCard from '../../components/products/ProductCard'
 
 //make 
 
@@ -28,11 +29,10 @@ const rental_vehicles = ({ data }) => {
 
     return (
         <Layout>
-            <div>{data.vehicles.map(vehicle => {
+            <div>{data.vehicles.map((vehicle, key) => {
                 return <div>
-                    <p>Model: {vehicle.model}</p>
-                    <p>Make: {vehicle.make}</p>
-                    <br/>
+                    <ProductCard data={vehicle} key={key} />
+                    <br />
                 </div>
             })}</div>
         </Layout>

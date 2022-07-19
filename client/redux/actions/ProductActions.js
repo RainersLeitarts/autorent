@@ -29,8 +29,6 @@ export const postVehicle = (values, images) => async (dispatch) => {
             headers: { "Content-Type": "application/json" }
         })
 
-        console.log(response)
-
         if(response.data.error) {
             throw new Error('Aizpildiet visus lauciņus!')
         }
