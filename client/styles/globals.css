@@ -10,6 +10,7 @@ body {
 
 body {
   background-color: #F9F9F9;
+  overflow-x: hidden;
 }
 
 a {
@@ -20,3 +21,4 @@ a {
 * {
   box-sizing: border-box;
 }
+

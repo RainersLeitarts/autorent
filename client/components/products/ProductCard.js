@@ -30,7 +30,11 @@ const ProductCard = ({ data }) => {
       </div>
       <div className={styles.contentContainer}>
         <h3 className={styles.cardTitle} >{make} {model}</h3>
-        <p className={styles.year}>{year}</p>
+        <div className={styles.statusContainer}>
+          <p className={styles.year}>{year}</p>
+          <div className={`${styles.statusLight} ${status === 'Pieejams' ? styles.available : styles.unavailable}`} />
+          <p className={styles.statusText}>{status}</p>
+        </div>
         <div className={styles.infoContainer} >
           <InfoElement icon={doorsIcon} text={`${doors} durvis`} />
           <InfoElement icon={seatsIcon} text={`${seats} vietas`} />

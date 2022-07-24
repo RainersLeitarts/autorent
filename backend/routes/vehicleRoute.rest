@@ -2,7 +2,7 @@ GET http://localhost:3000/api/vehicles/getAll
 
 ###
 
-GET http://localhost:3000/vehicles/62c31d7a25a6ae14f08c47b1
+GET http://localhost:3000/api/vehicles/62d4134fbee4d2f2844864b7
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQ4M2I2NjAxMjM5MmIwNmNkMDQ0YSIsImlhdCI6MTY1NzExNTQyNCwiZXhwIjoxNjU3MTE2NDI0fQ.mKr4PS-rIGu6ivovsN6TBBMIvAFrMfWPgoxEVBuNrVI
 
 ###
@@ -29,3 +29,9 @@ Content-Type: application/json
     "make" : "Ford",
     "model" : "Modeo"
 }
+
+###
+
+GET http://localhost:3000/vehicles/62c31d7a25a6ae14f08c47b1
+
+###

@@ -9,6 +9,10 @@ const vehicleSchema = new Schema({
         type: Boolean,
         required: true
     },
+    type: {
+        type: String,
+        required: true
+    },
     make: {
         type: String,
         required: true
