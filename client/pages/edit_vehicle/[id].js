@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Layout from '../../components/Layout'
 import styles from '../../styles/CreateVehicle.module.css'
-import { postVehicle } from '../../redux/actions/ProductActions'
+import { editVehicle } from '../../redux/actions/ProductActions'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 
@@ -54,7 +54,7 @@ const edit_vehicle = ({ data }) => {
         cruise: data.cruise,
         ac: data.ac,
         price: data.price,
-        images: [...data.images]
+        images: data.images
     })
     const { status, visible, type, make, model, year, engineVolume, fuelType, gearbox, doors, seats, cruise, ac, price } = values
     const [oldImages, setOldImages] = useState(data.images)
@@ -78,12 +78,15 @@ const edit_vehicle = ({ data }) => {
     const handleRemoveOldImage = e => {
         const parts = e.target.style['background-image'].split('/')
         const id = parts[parts.length - 1].split('.')[0]
+        //const id = parts[parts.length - 2] + '/' + parts[parts.length - 1].split('.')[0]
 
         const url = e.target.style['background-image'].replaceAll('url("', '').replaceAll('")', '')
 
-        setOldImages(prev => {
-            return prev.filter(image => image !== url)
-        })
+        
+
+        // setOldImages(prev => {
+        //     return prev.filter(image => image !== url)
+        // })
 
         setRemovedImages(prev => {
             return [...prev, id]
@@ -99,32 +102,37 @@ const edit_vehicle = ({ data }) => {
     }
 
     const handleFormInput = input => e => {
+        if(input === 'price') {
+            setValues({ ...values, [input]: parseInt(e.target.value) })
+            return
+        }
+
         setValues({ ...values, [input]: e.target.value })
     }
 
     const handleSubmit = async () => {
-        dispatch(postVehicle(values, images))
-        success && setValues(
-            {
-                status: 'Pieejams',
-                visible: true,
-                make: '',
-                model: '',
-                year: undefined,
-                engineVolume: undefined,
-                fuelType: '',
-                gearbox: '',
-                doors: undefined,
-                seats: undefined,
-                cruise: undefined,
-                ac: undefined,
-                price: undefined,
-                images: []
-            })
+        dispatch(editVehicle(values, removedImages, images))
+        // success && setValues(
+        //     {
+        //         status: 'Pieejams',
+        //         visible: true,
+        //         make: '',
+        //         model: '',
+        //         year: undefined,
+        //         engineVolume: undefined,
+        //         fuelType: '',
+        //         gearbox: '',
+        //         doors: undefined,
+        //         seats: undefined,
+        //         cruise: undefined,
+        //         ac: undefined,
+        //         price: undefined,
+        //         images: []
+        //     })
     }
 
     useEffect(() => {
-        //console.log(removedImages)
+        //console.log(values)
     })
 
     return (
@@ -148,8 +156,8 @@ const edit_vehicle = ({ data }) => {
                         <option value={false} >Paslēpts</option>
                     </select>
                     <select value={status} onChange={handleFormInput('status')} className={`${styles.input} ${styles.statusInput}`}>
-                        <option value={'available'} >Pieejams</option>
-                        <option value={'unavailable'} >Nav pieejams</option>
+                        <option value={'Pieejams'} >Pieejams</option>
+                        <option value={'Nav Pieejams'} >Nav pieejams</option>
                     </select>
                 </div>
             </Section>
@@ -204,7 +212,7 @@ const edit_vehicle = ({ data }) => {
                     {images.map((image, key) => {
                         return <div onClick={handleRemoveImage} data-name={image.name} key={key} className={styles.image} style={{ backgroundImage: `url(${URL.createObjectURL(image)})` }}  ></div>
                     })}
-                    
+
                 </div>
             </Section>
         </Layout>

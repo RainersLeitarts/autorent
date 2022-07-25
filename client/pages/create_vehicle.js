@@ -15,8 +15,6 @@ const Section = ({ children, title }) => {
 
 const create_vehicle = () => {
     const dispatch = useDispatch()
-    const [type, setType] = useState('automašīna')
-
     const { loading, error, success } = useSelector(state => state.vehicle)
 
     //generate inputs from values ex
@@ -28,6 +26,7 @@ const create_vehicle = () => {
     const [values, setValues] = useState({
         status: 'Pieejams',
         visible: true,
+        type: 'automašīna',
         make: '',
         model: '',
         year: undefined,
@@ -41,7 +40,7 @@ const create_vehicle = () => {
         price: undefined,
         images: []
     })
-    const { status, visible, make, model, year, engineVolume, fuelType, gearbox, doors, seats, cruise, ac, price } = values
+    const { status, visible, type, make, model, year, engineVolume, fuelType, gearbox, doors, seats, cruise, ac, price } = values
     const [images, setImages] = useState([])
     const fileInput = useRef(null)
 
@@ -91,9 +90,9 @@ const create_vehicle = () => {
             })
     }
 
-    const handleChangeType = (e) => {
-        setType(e.target.value)
-    }
+    useEffect(()=>{
+        console.log(type)
+    })
 
     return (
         <Layout>
@@ -102,7 +101,7 @@ const create_vehicle = () => {
             {error && <h3>Notikusi kļūda...</h3>}
             {success && <h3>Piedāvājums veiksmīgi izveidots!</h3>}
             <div className={styles.controls}>
-                <select value={type} onChange={handleChangeType} className={`${styles.input} ${styles.types}`}>
+                <select value={type} onChange={handleFormInput('type')} className={`${styles.input} ${styles.types}`}>
                     <option value={'automašīna'} >Automašīna</option>
                     <option value={'piekabe'} >Piekabe</option>
                 </select>

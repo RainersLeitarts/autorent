@@ -1,20 +1,17 @@
-import connectMongo from "../../../utils/connectMongo";
-import Vehicle from '../../../models/vehicle'
 import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+    cloud_name: 'dmau27ozz',
+    api_key: '772896667624759',
+    api_secret: 'hmrgrmXA-hzfunm1Tx31Yl2Wxq0'
+})
 
 export default async (req, res) => {
     try {
-        console.log('Connecting to DB...')
-        await connectMongo()
-        console.log('Connected to DB!')
-
-        console.log('Editing vehicle...')
-        const vehicle = await Vehicle.create(req.body)
-        console.log('Vehicle edited!')
-        
-        res.json({ vehicle })
+        const {id} = req.query
+        const response = await cloudinary.uploader.destroy('vehicle-images/'+id)
+        res.json({message: response.result})
     } catch (error) {
-        console.log(error)
-        res.json({error})
+        res.json({message: error.message})
     }
 }
