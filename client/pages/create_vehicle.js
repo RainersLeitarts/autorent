@@ -3,6 +3,7 @@ import Layout from '../components/Layout'
 import styles from '../styles/CreateVehicle.module.css'
 import { postVehicle } from '../redux/actions/ProductActions'
 import { useDispatch, useSelector } from 'react-redux'
+import CarForm from '../components/forms/carForm'
 
 const Section = ({ children, title }) => {
     return (
@@ -16,12 +17,6 @@ const Section = ({ children, title }) => {
 const create_vehicle = () => {
     const dispatch = useDispatch()
     const { loading, error, success } = useSelector(state => state.vehicle)
-
-    //generate inputs from values ex
-    //model: {
-    //    value: a6,
-    //    placeholder: 'Modelis'
-    //}
 
     const [values, setValues] = useState({
         status: 'Pieejams',
@@ -40,12 +35,9 @@ const create_vehicle = () => {
         price: undefined,
         images: []
     })
-    const { status, visible, type, make, model, year, engineVolume, fuelType, gearbox, doors, seats, cruise, ac, price } = values
+    const { status, visible, type, price } = values
     const [images, setImages] = useState([])
     const fileInput = useRef(null)
-
-    //for testing
-    const makes = ['Audi', 'Opel', 'Mazda']
 
     const handleClick = () => {
         fileInput.current.click()
@@ -91,7 +83,7 @@ const create_vehicle = () => {
     }
 
     useEffect(()=>{
-        console.log(type)
+        console.table(values)
     })
 
     return (
@@ -121,41 +113,7 @@ const create_vehicle = () => {
                 </div>
             </Section>
             <Section title='Galvenie Parametri'>
-                <div className={styles.inputsContainer}>
-                    <input value={make} onChange={handleFormInput('make')} placeholder='Marka' className={`${styles.input} ${styles.small}`} type='text' />
-                    <input value={year} onChange={handleFormInput('year')} placeholder='Gads' className={`${styles.input} ${styles.small}`} type='text' />
-                    <input value={engineVolume} onChange={handleFormInput('engineVolume')} placeholder='Motora Tilpums' className={`${styles.input} ${styles.small}`} type='number' />
-                    <select value={gearbox} onChange={handleFormInput('gearbox')} placeholder='Kārbas tips' className={`${styles.input} ${styles.small}`} type='text'>
-                        <option >Kārbas tips</option>
-                        <option value={'Manuāla'} >Manuāla</option>
-                        <option value={'Automātiska'} >Automātiska</option>
-                    </select>
-                    <input value={seats} onChange={handleFormInput('seats')} placeholder='Sēdvietas' className={`${styles.input} ${styles.small}`} type='number' />
-                    <input value={model} onChange={handleFormInput('model')} placeholder='Modelis' className={`${styles.input} ${styles.small}`} type='text' />
-                    <select value={fuelType} onChange={handleFormInput('fuelType')} placeholder='Degvielas tips' className={`${styles.input} ${styles.small}`} type='text'>
-                        <option >Degvielas tips</option>
-                        <option value={'Dīzelis'} >Dīzelis</option>
-                        <option value={'Benzīns'} >Benzīns</option>
-                        <option value={'Elektrība'} >Elektrība</option>
-                        <option value={'Hibrīds'} >Hibrīds</option>
-                    </select>
-                    <input value={doors} onChange={handleFormInput('doors')} placeholder='Durvis' className={`${styles.input} ${styles.small}`} type='number' />
-                    <select value={cruise} onChange={handleFormInput('cruise')} placeholder='Kruīza kontrole' className={`${styles.input} ${styles.small}`} type='text'>
-                        <option >Kruīza kontrole</option>
-                        <option value={true} >Ir</option>
-                        <option value={false} >Nav</option>
-                    </select>
-                    <select value={ac} onChange={handleFormInput('ac')} placeholder='Kondicionieris' className={`${styles.input} ${styles.small}`} type='text'>
-                        <option value={true} >Kondicionieris</option>
-                        <option value={true} >Ir</option>
-                        <option value={false} >Nav</option>
-                    </select>
-                    <datalist className={`${styles.input} ${styles.small}`} id='makes'>
-                        {makes.map((make, key) => {
-                            return <option key={key} value={make} />
-                        })}
-                    </datalist>
-                </div>
+                <CarForm handleFormInput={handleFormInput} values={values} />
             </Section>
             <Section title='Izcenojums'>
                 <input value={price} onChange={handleFormInput('price')} placeholder='Cena' className={`${styles.input} ${styles.small}`} type='' />
