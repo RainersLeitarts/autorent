@@ -1,6 +1,5 @@
 .productsContainer{
     width: 100%;
-    outline: 3px solid aqua;
     display: flex;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     flex-wrap: wrap;
@@ -9,7 +8,6 @@
 }
 
 .productTypeContainer{
-    margin-top: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,13 +18,17 @@
     font-size: 48px;
 }
 
+.first{
+    margin-top: 30px;
+}
+
 .productTypeSmallTitle{
     text-align: center;
 }
 
 .banner{
     width: 100vw;
-    height: 350px;
+    height: 450px;
     background-color: #1c0a00be;
     background-attachment: fixed;
     background-position: 0 calc(-250px);
@@ -39,7 +41,6 @@
 .bannerContent{
     max-width: 1400px;
     height: 100%;
-    outline: 3px solid aqua;
     width: 100%;
     display: flex;
     align-items: center;

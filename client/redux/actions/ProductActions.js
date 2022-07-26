@@ -41,47 +41,51 @@ export const postVehicle = (values, images) => async (dispatch) => {
     }
 }
 
-export const editVehicle = (values, deletedImages, newImages) => async (dispatch) => {
+export const editVehicle = (id, values, deletedImages, newImages) => async (dispatch) => {
     try {
         dispatch(CREATE_VEHICLE_REQUEST())
         console.log(values)
         console.log('deleted Images: ' + deletedImages)
         console.log('new images: ' + newImages)
         
+        //deletes photos from cloudinary
+        const deletePhotos = async (id) => {
+            return await axios.post('http://localhost:3000/api/cloudinary/delete/'+id)
+        }
 
-        // const deletePhotos = async (id) => {
-        //     return await axios.post('http://localhost:3000/api/cloudinary/delete/'+id)
-        // }
+        const deletedPhotoRes = await Promise.all(
+            deletedImages.map(deletePhotos)
+        )
+        
 
-        // const deletedPhotoRes = await Promise.all(
-        //     deletedImages.map(deletePhotos)
-        // )
+        //uploads new images and gets image url
+        const formData = new FormData()
+        formData.append('upload_preset', UPLOAD_PRESET)
 
-        // const formData = new FormData()
-        // formData.append('upload_preset', UPLOAD_PRESET)
+        //async function that returns a promise
+        const uploadPhotos = async (image) => {
+                formData.append('file', image)
+                const response = await axios.post('https://api.cloudinary.com/v1_1/dmau27ozz/image/upload', formData)
+                return response.data['secure_url']
+        }
 
-        // //async function that returns a promise
-        // const uploadPhotos = async (image) => {
-        //         formData.append('file', image)
-        //         const response = await axios.post('https://api.cloudinary.com/v1_1/dmau27ozz/image/upload', formData)
-        //         return response.data['secure_url']
-        // }
+        //awaits for all promises returned by the map
+        const photoUrls = await Promise.all( 
+            newImages.map(uploadPhotos)
+        )
 
-        // //awaits for all promises returned by the map
-        // const photoUrls = await Promise.all( 
-        //     newImages.map(uploadPhotos)
-        //  )
+        //add image urls to values
+        values.images = [...values.images, ...photoUrls]
+        //
 
-        // //add image urls to values
-        // values.images = [...values.images, ...photoUrls]
+        //sends save request
+        const response = await axios.patch('http://localhost:3000/api/vehicles/edit/' + id, values, {
+            headers: { "Content-Type": "application/json" }
+        })
 
-        // const response = await axios.patch('http://localhost:3000/api/vehicles/edit', values, {
-        //     headers: { "Content-Type": "application/json" }
-        // })
-
-        // if(response.data.error) {
-        //     throw new Error('Aizpildiet visus lauciņus!')
-        // }
+        if(response.data.error) {
+            throw new Error('Aizpildiet visus lauciņus!')
+        }
 
         dispatch(CREATE_VEHICLE_SUCCESS(true))
     } catch (error) {

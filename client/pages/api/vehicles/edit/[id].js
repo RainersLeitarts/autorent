@@ -10,10 +10,17 @@ export default async (req, res) => {
         //Get single vehicle then update 
 
         console.log('Editing vehicle...')
-        const vehicle = await Vehicle.updatMany()
+        let vehicle = await Vehicle.findById(id)
+
+        for (let argument in req.body) {
+            vehicle[argument] = req.body[argument]
+        }
+        console.log(vehicle)
+
+        const updatedVehicle = await vehicle.save()
         console.log('Vehicle edited!')
 
-        res.json({ vehicle })
+        res.json({ updatedVehicle })
     } catch (error) {
         console.log(error)
         res.json({error})

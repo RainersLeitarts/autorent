@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useRouter } from "next/router";
 import Layout from '../../components/Layout'
 import styles from '../../styles/CreateVehicle.module.css'
 import { editVehicle } from '../../redux/actions/ProductActions'
@@ -28,6 +29,8 @@ const Section = ({ children, title }) => {
 }
 
 const edit_vehicle = ({ data }) => {
+    const router = useRouter()
+    const id = router.query["id"];
     const dispatch = useDispatch()
     //const [type, setType] = useState('automašīna')
 
@@ -57,7 +60,6 @@ const edit_vehicle = ({ data }) => {
         images: data.images
     })
     const { status, visible, type, make, model, year, engineVolume, fuelType, gearbox, doors, seats, cruise, ac, price } = values
-    const [oldImages, setOldImages] = useState(data.images)
     const [removedImages, setRemovedImages] = useState([])
     const [images, setImages] = useState([])
     const fileInput = useRef(null)
@@ -82,12 +84,10 @@ const edit_vehicle = ({ data }) => {
 
         const url = e.target.style['background-image'].replaceAll('url("', '').replaceAll('")', '')
 
-        
-
-        // setOldImages(prev => {
-        //     return prev.filter(image => image !== url)
-        // })
-
+        const filteredImages = values.images.filter(image => image !== url)
+        console.log(filteredImages)
+        setValues({...values, images: filteredImages})
+    
         setRemovedImages(prev => {
             return [...prev, id]
         })
@@ -111,28 +111,13 @@ const edit_vehicle = ({ data }) => {
     }
 
     const handleSubmit = async () => {
-        dispatch(editVehicle(values, removedImages, images))
-        // success && setValues(
-        //     {
-        //         status: 'Pieejams',
-        //         visible: true,
-        //         make: '',
-        //         model: '',
-        //         year: undefined,
-        //         engineVolume: undefined,
-        //         fuelType: '',
-        //         gearbox: '',
-        //         doors: undefined,
-        //         seats: undefined,
-        //         cruise: undefined,
-        //         ac: undefined,
-        //         price: undefined,
-        //         images: []
-        //     })
+        dispatch(editVehicle(id, values, removedImages, images))
+        //fix flashing on save
+        setImages([])
     }
 
     useEffect(() => {
-        //console.log(values)
+        //console.log(id)
     })
 
     return (
@@ -205,7 +190,7 @@ const edit_vehicle = ({ data }) => {
                 <div className={styles.imagesContainer}>
                     <input ref={fileInput} onChange={handleChange} hidden accept='image/*' multiple type='file' id='add'></input>
                     <button className={styles.addImgBtn} onClick={handleClick}>+</button>
-                    {oldImages.map((image, key) => {
+                    {values.images.map((image, key) => {
                         return <div onClick={handleRemoveOldImage} data-name={image.name} key={key} className={styles.image} style={{ backgroundImage: `url(${image})` }}></div>
                     })}
 

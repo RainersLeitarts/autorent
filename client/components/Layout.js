@@ -1,6 +1,6 @@
 import Navbar from './Navbar'
 import styles from '../styles/Layout.module.css'
-import { BannerMain } from '../pages/products/rental_vehicles'
+import { BannerMain } from '../pages'
 
 const Layout = ({ children, banner }) => {
     return (

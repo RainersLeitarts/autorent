@@ -48,7 +48,7 @@ const createVehicle = async (req, res) => {
 const updateVehicle = async (req, res) => {
     if (req.body === null) return res.status(400).json({ message: "Empty request body" })
 
-    for (argument in req.body) {
+    for (let argument in req.body) {
         res.vehicle[argument] = req.body[argument]
     }
 
