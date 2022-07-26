@@ -1,7 +1,31 @@
+import { useEffect, useState } from 'react'
 import styles from '../../styles/CreateVehicle.module.css'
 
-const CarForm = ({handleFormInput, values}) => {
-    const { make, model, year, engineVolume, fuelType, gearbox, doors, seats, cruise, ac} = values
+const CarForm = ({ grabValues }) => {
+    const [values, setValues] = useState({
+        make: '',
+        model: '',
+        year: undefined,
+        engineVolume: undefined,
+        fuelType: '',
+        gearbox: '',
+        doors: undefined,
+        seats: undefined,
+        cruise: undefined,
+        ac: undefined,
+        price: undefined,
+    })
+
+    useEffect(() => {
+        grabValues(values)
+    }, [values])
+
+    const { make, model, year, engineVolume, fuelType, gearbox, doors, seats, cruise, ac } = values
+
+    const handleFormInput = input => e => {
+        setValues({ ...values, [input]: e.target.value })
+    }
+
     //for testing
     const makes = ['Audi', 'Opel', 'Mazda']
 

@@ -22,20 +22,10 @@ const create_vehicle = () => {
         status: 'Pieejams',
         visible: true,
         type: 'automašīna',
-        make: '',
-        model: '',
-        year: undefined,
-        engineVolume: undefined,
-        fuelType: '',
-        gearbox: '',
-        doors: undefined,
-        seats: undefined,
-        cruise: undefined,
-        ac: undefined,
         price: undefined,
-        images: []
     })
     const { status, visible, type, price } = values
+
     const [images, setImages] = useState([])
     const fileInput = useRef(null)
 
@@ -61,29 +51,22 @@ const create_vehicle = () => {
         setValues({ ...values, [input]: e.target.value })
     }
 
+    const grabValues = (values) => {
+        //each form stores its relevant state in its component
+        //OnChange form state is merged into create_vehicle state
+        //this will ensure easier introduction of new types of products, I think
+        setValues(prev => {
+            return {...prev, ...values}
+        })
+    }
+
     const handleSubmit = async () => {
+        //dispatches post action
         dispatch(postVehicle(values, images))
-        success && setValues(
-            {
-                status: 'Pieejams',
-                visible: true,
-                make: '',
-                model: '',
-                year: undefined,
-                engineVolume: undefined,
-                fuelType: '',
-                gearbox: '',
-                doors: undefined,
-                seats: undefined,
-                cruise: undefined,
-                ac: undefined,
-                price: undefined,
-                images: []
-            })
     }
 
     useEffect(()=>{
-        console.table(values)
+        //console.log(values)
     })
 
     return (
@@ -113,7 +96,7 @@ const create_vehicle = () => {
                 </div>
             </Section>
             <Section title='Galvenie Parametri'>
-                <CarForm handleFormInput={handleFormInput} values={values} />
+                <CarForm grabValues={grabValues}/>
             </Section>
             <Section title='Izcenojums'>
                 <input value={price} onChange={handleFormInput('price')} placeholder='Cena' className={`${styles.input} ${styles.small}`} type='' />
