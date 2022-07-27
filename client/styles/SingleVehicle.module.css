@@ -1,0 +1,47 @@
+.sliderContainer{
+    width: 400px;
+    height: 300px;
+}
+
+.ImageSliderContainer{
+    width: 100%;
+    height: 100%;
+}
+
+.sliderImage{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.imageControlsContainer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.controlsButton{
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    border: none;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: rgba(100, 100, 100, 0.3);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.controlsButton:hover{
+    background-color: rgba(60, 60, 60, 0.6);
+}
