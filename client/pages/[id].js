@@ -33,18 +33,16 @@ const ImageSlider = ({images}) => {
         })
     }
 
-    useEffect(() => {
-        console.log(shownImage)
-    })
-
     return (
         <div className={styles.ImageSliderContainer}>
-            <div className={styles.sliderImage} style={{ backgroundImage: `url(${images[shownImage]})` }} >
-                <div className={styles.imageControlsContainer} >
+            {images?.map((image, index) => {
+                return <div className={`${styles.sliderImage} ${index === shownImage ? styles.opacity : ''}`} style={{ backgroundImage: `url(${image})` }} ></div>
+            })}
+            
+            <div className={styles.imageControlsContainer} >
                     <div className={`${styles.controlsButton}`} style={{ backgroundImage: `url(${previousIcon.src})` }} onClick={previousImage} />
                     <div className={`${styles.controlsButton}`} style={{ backgroundImage: `url(${nextIcon.src})` }} onClick={nextImage} />
                 </div>
-            </div>
         </div>
     )
 
