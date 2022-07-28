@@ -80,6 +80,9 @@
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cardButon:hover{

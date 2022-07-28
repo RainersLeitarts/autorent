@@ -18,6 +18,7 @@ const getVehicles = async () => {
 //filter visible
 export async function getServerSideProps(context) {
     const data = await getVehicles(null, context.params)
+    console.log('hereee: ' + data)
     return {
         props: { data }
     }
@@ -51,6 +52,8 @@ const rental_vehicles = ({ data }) => {
             <div className={styles.productsContainer}>
                 {data.vehicles.map((vehicle, key) => {
                     if (vehicle.type === 'car') {
+                        if( vehicle.visible !== true ) return
+
                         return <div>
                             <ProductCard data={vehicle} key={key} />
                         </div>

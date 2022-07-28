@@ -8,8 +8,9 @@ import gearboxIcon from '../../public/images/gearbox.png'
 import seatsIcon from '../../public/images/seats.png'
 
 import React from 'react'
+import Link from 'next/link'
 
-const InfoElement = ({ icon, text }) => {
+export const InfoElement = ({ icon, text }) => {
   return (
     <div className={styles.infoElementContainer}>
       <img src={icon.src} className={styles.infoElementIcon}></img>
@@ -19,8 +20,7 @@ const InfoElement = ({ icon, text }) => {
 }
 
 const ProductCard = ({ data }) => {
-
-  const { status, visible, make, model, year, engineVolume, fuelType,
+  const { _id, status, visible, make, model, year, engineVolume, fuelType,
     gearbox, doors, seats, cruise, ac, price, images } = data
 
   return (
@@ -45,7 +45,9 @@ const ProductCard = ({ data }) => {
           <InfoElement icon={cruiseIcon} text={cruise ? 'Ir' : 'Nav'} />
         </div>
       </div>
-      <button className={styles.cardButon}>{`Sākot no ${price}€ dienā`}</button>
+      <Link href={`/${_id}`}>
+        <a className={styles.cardButon}>{`Sākot no ${price}€ dienā`}</a>
+      </Link>
     </div>
   )
 }
