@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 
-const initialState = {}
+const initialState = {loading: false, sucess: false, error: false}
 
 export const vehicleSlice = createSlice({
     name: 'VehicleSlice',
@@ -15,9 +15,6 @@ export const vehicleSlice = createSlice({
         },
         CREATE_VEHICLE_FAIL: (state, action) => {
             return {loading: false, error: action.payload}
-        },
-        STORE_RENTAL_VEHICLES: (state, action) => {
-            return {...state, rental_vehicles: action.payload}
         },
         default: (state) => {
             return (state)

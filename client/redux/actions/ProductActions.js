@@ -1,4 +1,5 @@
-import { CREATE_VEHICLE_REQUEST, CREATE_VEHICLE_SUCCESS, CREATE_VEHICLE_FAIL, STORE_RENTAL_VEHICLES } from '../reducers/VehicleSlice'
+import { CREATE_VEHICLE_REQUEST, CREATE_VEHICLE_SUCCESS, CREATE_VEHICLE_FAIL } from '../reducers/VehicleSlice'
+import { STORE_RENTAL_VEHICLES } from '../reducers/FetchedVehicles'
 import axios from 'axios'
 
 
@@ -89,6 +90,7 @@ export const editVehicle = (id, values, deletedImages, newImages) => async (disp
 
         dispatch(CREATE_VEHICLE_SUCCESS(true))
     } catch (error) {
+        console.log(error)
         dispatch(CREATE_VEHICLE_FAIL(error.response && error.response.data.message
             ? error.response.data.message
             : error.message))

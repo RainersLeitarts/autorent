@@ -59,7 +59,7 @@ const ImageSlider = ({ images }) => {
 const SingleVehicle = () => {
     const router = useRouter()
     const id = router.query["id"];
-    const vehicles = useSelector(state => state.vehicle)
+    const vehicles = useSelector(state => state.fetchedVehicles)
     //const veh = vehicles?.rental_vehicles?.vehicles?.find(item => item._id === id)
     let vehicle = vehicles?.rental_vehicles?.vehicles?.find(item => item._id === id)
 
