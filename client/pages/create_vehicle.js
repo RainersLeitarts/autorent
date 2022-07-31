@@ -90,8 +90,8 @@ const create_vehicle = () => {
                         <option value={false} >Paslēpts</option>
                     </select>
                     <select value={status} onChange={handleFormInput('status')} className={`${styles.input} ${styles.statusInput}`}>
-                        <option value={'available'} >Pieejams</option>
-                        <option value={'unavailable'} >Nav pieejams</option>
+                        <option value={'Pieejams'} >Pieejams</option>
+                        <option value={'Nav Pieejams'} >Nav pieejams</option>
                     </select>
                 </div>
             </Section>

@@ -82,6 +82,36 @@
     border-radius: 5px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px;
+    padding: 20px;
+    gap: 20px;
+}
+
+.contactForm {
+    width: 100%;
+    display: grid;
+    grid-template-areas:
+        'test1 test1 test2 test2'
+        'test3 test3 test3 test3'
+        'test4 test4 test4 test4';
+        
+    gap: 10px;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.inputField {
+    background-color: rgba(255, 255, 255, 0.8);
+    
+    height: 30px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.textarea{
+    background-color: rgba(255, 255, 255, 0.8);
+    max-width: 100%;
+    min-width: 100%;
+    height: 200px;
 }
 
 .contentContainer {

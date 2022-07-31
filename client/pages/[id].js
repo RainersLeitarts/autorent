@@ -97,7 +97,13 @@ const SingleVehicle = () => {
                 </div>
 
                 <div className={styles.rightContainer}>
+                    <div className={styles.contactForm}>
+                        <input style={{ gridArea: 'test1' }} className={styles.inputField} />
+                        <input style={{ gridArea: 'test2' }} className={styles.inputField} />
+                        <input style={{ gridArea: 'test3' }} className={styles.inputField} />
+                        <textarea style={{ gridArea: 'test4' }} className={styles.textarea} />
 
+                    </div>
                 </div>
             </div>
         </Layout>
